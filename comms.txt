@@ -1,0 +1,10 @@
+/chaosGame
+/normalGame
+/join
+/flee
+/startNow
+/endNow
+/playerStatus
+/killSome
+/nextGameRemindMe
+
