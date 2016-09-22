@@ -1,10 +1,9 @@
-/chaosGame
-/normalGame
-/join
-/flee
-/startNow
-/endNow
-/playerStatus
-/killSome
-/nextGameRemindMe
+/chaosGame      开启混乱模式，随机分配角色
+/normalGame     开启正常模式，根据人数分配角色
+/join           加入游戏
+/killSomeone    把某个已经加入游戏的人踢掉
+/flee           离开游戏，相当于killSome自己
+/startNow       开始游戏
+/endNow         立即结束游戏
+/playerStatus   查看玩家状态
 
