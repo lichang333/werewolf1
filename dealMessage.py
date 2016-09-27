@@ -1,11 +1,26 @@
 #coding:utf-8
 import api
 import database
+import re
 
 def F_text(text,send_by,chat):
     print text , chat['id']
-    api.sendMessage(text,chat['id'])
+    #api.sendMessage(text,chat['id'])
 
+    if re.match(r'/chaosGame(@cdqzWerewolfBot)?',text):
+        api.sendMessage(u'开始混乱模式',chat['id']);
+
+    
+    if re.match(r'/normalGame(@cdqzWerewolfBot)?',text):
+        api.sendMessage(u'开始正常模式',chat['id']);
+    
+
+    if re.match(r'/join(@cdqzWerewolfBot)?',text):
+        api.sendMessage(u'加入',chat['id']);
+
+    """
+    在这里搞事情
+    """
 
 def F_newMember(member,send_by,chat):
 
