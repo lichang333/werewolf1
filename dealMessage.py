@@ -47,10 +47,6 @@ def F_newMember(member,send_by,chat):
 
 def dealMessage():
 
-    print 'dM ok'
-
-    database.test += 1
-
     value = {'offset' : api.update_id}
     mess = api.work('/getupdates',value)
 

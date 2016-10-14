@@ -3,7 +3,6 @@ import api
 import database
 
 def dealTimeCounter():
-    print 'dTC ok'
     if database.fail > 0:
         database.fail -= 1
         if database.fail == 30:
