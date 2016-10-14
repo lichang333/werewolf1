@@ -18,6 +18,10 @@ def F_text(text,send_by,chat):
     if re.match(r'/join(@cdqzWerewolfBot)?',text):
         api.sendMessage(u'加入',chat['id']);
 
+    if re.match(r'/sad(@cdqzWerewolfBot)?',text):
+        api.sendMessage(u'我赌五毛人不够',chat['id']);
+        database.fail = 60
+        database.chatId = chat['id'];
     """
     在这里搞事情
     """
