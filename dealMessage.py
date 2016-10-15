@@ -14,7 +14,7 @@ def CallEveryone(chat_id):
             if user.has_key('username'):
                 text = '@' + user['username'] + ' ' + text
             else:
-                text = user['firs_tname'] + ' ' + text
+                text = user['first_name'] + ' ' + text
 
         print text
         api.sendMessage(text,chat_id)
