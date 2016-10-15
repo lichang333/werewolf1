@@ -3,6 +3,23 @@ import api
 import database
 import re
 
+def CallEveryone(chat_id):
+    if(chat_id < 0):
+        text = u', 来打狼人吗?'
+        value = {'chat_id':chat_id}
+        data = api.work('/getChatAdministrators',value)
+        users = data['result']
+        for xx in users:
+            user = xx['user']
+            if user.has_key('username'):
+                text = '@' + user['username'] + ' ' + text
+            else:
+                text = user['firs_tname'] + ' ' + text
+
+        print text
+        api.sendMessage(text,chat_id)
+
+
 def F_text(text,send_by,chat):
     print text , chat['id']
     #api.sendMessage(text,chat['id'])
@@ -22,6 +39,9 @@ def F_text(text,send_by,chat):
         api.sendMessage(u'我赌五毛人不够',chat['id']);
         database.fail = 60
         database.chatId = chat['id'];
+    if re.match(r'/calleveryone(@cdqzWerewolfBot)?',text):
+        CallEveryone(chat['id']);
+
     """
     在这里搞事情
     """
