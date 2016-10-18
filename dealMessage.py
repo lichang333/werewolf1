@@ -4,8 +4,8 @@ import database
 import re
 
 def CallEveryone(chat_id):
-    if(chat_id < 0):
-        text = u', 来打狼人吗?'
+    if callList.has_key(chat_id) :
+        text = u'有人在召唤'  +'你来打狼人了'
         value = {'chat_id':chat_id}
         data = api.work('/getChatAdministrators',value)
         users = data['result']
@@ -22,6 +22,7 @@ def CallEveryone(chat_id):
 
 def F_text(text,send_by,chat):
     print text , chat['id']
+    print chat
     #api.sendMessage(text,chat['id'])
 
     if re.match(r'/chaosGame(@cdqzWerewolfBot)?',text):
