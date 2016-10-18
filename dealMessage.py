@@ -2,27 +2,43 @@
 import api
 import database
 import re
+import cPickle as pickle
 
-def CallEveryone(chat_id):
+def CallEveryone(chat_id,title):
+    
+    callList = pickle.load(open('callList.secret','r'))
+    
     if callList.has_key(chat_id) :
-        text = u'有人在召唤'  +'你来打狼人了'
-        value = {'chat_id':chat_id}
-        data = api.work('/getChatAdministrators',value)
-        users = data['result']
-        for xx in users:
-            user = xx['user']
-            if user.has_key('username'):
-                text = '@' + user['username'] + ' ' + text
-            else:
-                text = user['first_name'] + ' ' + text
+        text = u'有人在' + title + u'召唤你打狼人了'
+        infor = u'已召唤'
 
-        print text.encode('utf-8')
-        api.sendMessage(text,chat_id)
+        for user in callList[chat_id]:
+            if not(api.sendMessage(text,user[0]) == {}):
+                infor += ' ' + user[1] 
+            else:
+                api.sendMessage(user[1] + u',请先私bot',chat_id)
+
+
+        print infor.encode('utf-8')
+        api.sendMessage(infor,chat_id)
+    else:
+        print chat_id
+
+def AddMe(chat_id,user):
+    callList = pickle.load(open('callList.secret','r'))
+    callList = {}
+    one = (user['id'], user['first_name'])
+    if callList.has_key(chat_id):
+        callList[chat_id].add(one)
+    else:
+        callList[chat_id] = set([one])
+
+    pickle.dump(callList,open('callList.secret','w'))
+    api.sendMessage(u'添加成功',chat_id)
 
 
 def F_text(text,send_by,chat):
     print text , chat['id']
-    print chat
     #api.sendMessage(text,chat['id'])
 
     if re.match(r'/chaosGame(@cdqzWerewolfBot)?',text):
@@ -40,9 +56,12 @@ def F_text(text,send_by,chat):
         api.sendMessage(u'我赌五毛人不够',chat['id']);
         database.fail = 60
         database.chatId = chat['id'];
-    if re.match(r'/calleveryone(@cdqzWerewolfBot)?',text):
-        CallEveryone(chat['id']);
 
+    if re.match(r'/calleveryone(@cdqzWerewolfBot)?',text):
+        CallEveryone(chat['id'],chat['title']); 
+    
+    if re.match(r'/addmetolist(@cdqzWerewolfBot)?',text):
+        AddMe(chat['id'],send_by)
     """
     在这里搞事情
     """
