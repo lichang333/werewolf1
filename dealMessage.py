@@ -16,7 +16,7 @@ def CallEveryone(chat_id):
             else:
                 text = user['first_name'] + ' ' + text
 
-        print text
+        print text.encode('utf-8')
         api.sendMessage(text,chat_id)
 
 
