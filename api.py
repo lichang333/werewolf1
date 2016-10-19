@@ -48,7 +48,7 @@ def sendMessage(text,send_to):
             'chat_id':send_to,
             'text' : unicode(text).encode('utf-8'),
             }
-    work('/sendmessage',value)
+    return work('/sendmessage',value)
     
 
 

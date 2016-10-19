@@ -13,10 +13,9 @@ def CallEveryone(chat_id,title):
         infor = u'已召唤'
 
         for user in callList[chat_id]:
-            if not(api.sendMessage(text,user[0]) == {}):
-                infor += ' ' + user[1] 
-            else:
-                api.sendMessage(user[1] + u',请先私bot',chat_id)
+            print user
+            api.sendMessage(text,user[0])
+            infor += ' ' + user[1] 
 
 
         print infor.encode('utf-8')
@@ -26,7 +25,6 @@ def CallEveryone(chat_id,title):
 
 def AddMe(chat_id,user):
     callList = pickle.load(open('callList.secret','r'))
-    callList = {}
     one = (user['id'], user['first_name'])
     if callList.has_key(chat_id):
         callList[chat_id].add(one)
@@ -34,7 +32,13 @@ def AddMe(chat_id,user):
         callList[chat_id] = set([one])
 
     pickle.dump(callList,open('callList.secret','w'))
-    api.sendMessage(u'添加成功',chat_id)
+    ret = api.sendMessage(u'添加成功',one[0]) 
+    print ret
+    if ret == {}:
+        api.sendMessage(one[1] + u',请先私bot',chat_id)
+        print 'fail'
+    else:
+        print 'succ'
 
 
 def F_text(text,send_by,chat):
