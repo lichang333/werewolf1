@@ -32,8 +32,8 @@ def AddMe(chat_id,user):
         callList[chat_id] = set([one])
 
     pickle.dump(callList,open('callList.secret','w'))
+    
     ret = api.sendMessage(u'添加成功',one[0]) 
-    print ret
     if ret == {}:
         api.sendMessage(one[1] + u',请先私bot',chat_id)
         print 'fail'
@@ -42,8 +42,8 @@ def AddMe(chat_id,user):
 
 
 def F_text(text,send_by,chat):
-    print text , chat['id']
-    #api.sendMessage(text,chat['id'])
+    print unicode(text).encode('utf-8') , chat['id']
+   #api.sendMessage(text,chat['id'])
 
     if re.match(r'/chaosGame(@cdqzWerewolfBot)?',text):
         api.sendMessage(u'开始混乱模式',chat['id']);
@@ -62,7 +62,8 @@ def F_text(text,send_by,chat):
         database.chatId = chat['id'];
 
     if re.match(r'/calleveryone(@cdqzWerewolfBot)?',text):
-        CallEveryone(chat['id'],chat['title']); 
+        if chat.has_key('title'):
+            CallEveryone(chat['id'],chat['title']); 
     
     if re.match(r'/addmetolist(@cdqzWerewolfBot)?',text):
         AddMe(chat['id'],send_by)
